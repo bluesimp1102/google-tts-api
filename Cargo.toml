@@ -1,0 +1,28 @@
+[package]
+name = "google-tts-api"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+base64 = "0.21.5"
+jsonwebtoken = "9.2.0"
+reqwest = { version = "0.11.22", features = ["json"] }
+serde = { version = "1.0.193", features = ["derive"] }
+serde_json = "1.0.108"
+
+tokio = { version = "1.35.0", features = ["full"] }
+async-trait = "0.1"
+
+symphonia = { features = ["aac", "mp3", "isomp4", "alac"], version = "0.5.3" }
+songbird = { version = "0.4.0", features = ["twilight", "driver"] }
+
+# [features]
+# enable_songbird = ["dep:songbird", "dep:symphonia"]
+
+[profile.dev]
+opt-level = 1
+
+[profile.release]
+opt-level = 3
