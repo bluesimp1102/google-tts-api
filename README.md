@@ -25,23 +25,22 @@ google-tts-api = { "https://github.com/bluesimp1102/google-tts-api" }
 Here's a simple example to demonstrate how to use google-tts-api:
 
 ```rust
-use google_tts_api::{TtsClient, SynthesizeInput, VoiceSelectionParams, AudioConfig};
+use std::fs::File;
+use google_tts_api::{ client::TextToSpeechClient, types::credentials::read_credentials };
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let credentials = /* Load your Google Cloud credentials */;
-    let tts_client = TtsClient::new(&credentials).await?;
+async fn main() {
+    let file = File::open("ggl_apis_credentials.json").expect("failed to open credentials file");
 
-    let input = SynthesizeInput { text: "Hello, world!".to_string() };
-    let voice = VoiceSelectionParams::default();
-    let audio_config = AudioConfig::default();
+    let credentials = read_credentials(file).expect("failed to read credentials from the file");
 
-    let response = tts_client.synthesize_text(input, voice, audio_config).await?;
+    let mut tts = TextToSpeechClient::new(&credentials).await.expect(
+        "failed to initialize tts client"
+    );
 
-    // Process the response
-    // ...
+    let synthesized_text = tts.synthesize_text("Hello from Jack".to_string()).await.exec().await;
 
-    Ok(())
+    println!("result: {:?}", synthesized_text);
 }
 ```
 
