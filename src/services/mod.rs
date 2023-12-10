@@ -1,5 +1,10 @@
+#[cfg(feature = "enable_songbird")]
 pub mod media_source;
+#[cfg(feature = "enable_songbird")]
 pub mod composer;
+#[cfg(feature = "enable_songbird")]
+pub mod songbird;
+
 pub mod synthesize;
 
 // pub async fn synthesize_speech(

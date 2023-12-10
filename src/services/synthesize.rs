@@ -17,16 +17,16 @@ use crate::types::synthesize::{
 
 pub struct SynthesizeSpeechBuilder {
     access_token: String,
-    input_text: String,
+    input: SynthesisInput,
     voice: VoiceSelectionParams,
     audio_config: AudioConfig,
 }
 
 impl SynthesizeSpeechBuilder {
-    pub fn new(access_token: String, input_text: String) -> Self {
+    pub fn new(access_token: String, input: SynthesisInput) -> Self {
         SynthesizeSpeechBuilder {
             access_token,
-            input_text,
+            input,
             voice: VoiceSelectionParams {
                 languageCode: default_language_code(),
                 ssmlGender: SsmlVoiceGender::Neutral,
@@ -37,7 +37,12 @@ impl SynthesizeSpeechBuilder {
     }
 
     pub fn input_text(mut self, text: &str) -> Self {
-        self.input_text = text.to_string();
+        self.input.text = Some(text.to_string());
+        self
+    }
+
+    pub fn input_ssml(mut self, ssml: &str) -> Self {
+        self.input.ssml = Some(ssml.to_string());
         self
     }
 
@@ -65,10 +70,7 @@ impl IntoFuture for SynthesizeSpeechBuilder {
         Box::pin(async move {
             let client = Client::new();
             let request = SynthesizeRequest {
-                input: SynthesisInput {
-                    text: self.input_text,
-                    // ssml: None,
-                },
+                input: self.input,
                 voice: self.voice,
                 audioConfig: AudioConfig::default(),
             };

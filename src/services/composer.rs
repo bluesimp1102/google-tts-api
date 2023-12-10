@@ -1,6 +1,6 @@
-use async_trait::async_trait;
 use songbird::input::{ AudioStreamError, Compose, AudioStream };
 use symphonia::core::io::MediaSource;
+use async_trait::async_trait;
 
 use super::media_source::GoogleTtsMediaSource;
 

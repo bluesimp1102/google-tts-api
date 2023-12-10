@@ -1,5 +1,5 @@
 use crate::{
-    types::credentials::{ GoogleCredentials, read_credentials },
+    types::{ credentials::{ GoogleCredentials, read_credentials }, synthesize::SynthesisInput },
     auth::get_access_token,
     services::synthesize::SynthesizeSpeechBuilder,
 };
@@ -118,6 +118,9 @@ impl TextToSpeechClient {
     /// Returns a [SynthesizeSpeechBuilder] instance for further configuration and synthesis.
     pub async fn synthesize_text(&mut self, input_text: String) -> SynthesizeSpeechBuilder {
         let _ = self.check_token().await;
-        SynthesizeSpeechBuilder::new(self.auth_token.access_token.clone(), input_text)
+        SynthesizeSpeechBuilder::new(self.auth_token.access_token.clone(), SynthesisInput {
+            text: Some(input_text),
+            ssml: None,
+        })
     }
 }

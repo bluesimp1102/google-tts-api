@@ -1,7 +1,6 @@
 extern crate google_tts_api;
 
 use std::fs::File;
-
 use google_tts_api::{ client::TextToSpeechClient, types::credentials::read_credentials };
 
 #[tokio::main]

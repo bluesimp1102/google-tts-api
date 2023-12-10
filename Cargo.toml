@@ -15,11 +15,17 @@ serde_json = "1.0.108"
 tokio = { version = "1.35.0", features = ["full"] }
 async-trait = "0.1"
 
-symphonia = { features = ["aac", "mp3", "isomp4", "alac"], version = "0.5.3" }
-songbird = { version = "0.4.0", features = ["twilight", "driver"] }
+symphonia = { features = [
+    "aac",
+    "mp3",
+    "isomp4",
+    "alac",
+], version = "0.5.3", optional = true }
+songbird = { version = "0.4.0", optional = true }
 
-# [features]
-# enable_songbird = ["dep:songbird", "dep:symphonia"]
+[features]
+default = []
+enable_songbird = ["dep:songbird", "dep:symphonia"]
 
 [profile.dev]
 opt-level = 1
