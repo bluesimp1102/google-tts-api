@@ -17,7 +17,7 @@ To use `google-tts-api` in your project, add it to your `Cargo.toml` file:
 
 ```toml
 [dependencies]
-google-tts-api = {}
+google-tts-api = { "https://github.com/bluesimp1102/google-tts-api" }
 ```
 
 ## Usage
